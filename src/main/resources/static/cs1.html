@@ -114,17 +114,17 @@ img.half {
                 
                 this.featureLayer = L.geoJSON(features, {
                     pointToLayer: function (feature, latlng) {        				
-           			    var incident_type = feature.properties.incident_type_id;
-                        return L.marker(latlng, {icon: (incident_type == 2 ? fireIcon: smellIcon)});
+           			    var incident_type = feature.properties.incident_type;
+                        return L.marker(latlng, {icon: (incident_type == "fire" ? fireIcon: smellIcon)});
                     },
                     onEachFeature: (feature, layer) => {        			    
-        			    var incident_type = feature.properties.incident_type_id;
+        			    var incident_type = feature.properties.incident_type;
                         var content = "<h1>Incident:" + incident_type + "</h1></br>";
         			    content = content.concat("<h2>Observed at: " + feature.properties.date + "<h2/>" + "</br>"); 
-                        if(incident_type == 2){
+                        if(incident_type == "fire"){
                             content = content.concat("<img class='half'' src='" + feature.properties.link + "' width='500px'/>" + "</br>");
-                        } else if(incident_type == 3){
-                                content = content.concat("<h2>Type: " + feature.properties.odor_inducing_type_id + "<h2/>");
+                        } else if(incident_type == "miasma"){
+                                content = content.concat("<h2>Type: " + feature.properties.odor_inducing_type + "<h2/>");
                         }
                         var customPopup = content;
 					    layer.bindPopup(customPopup);
